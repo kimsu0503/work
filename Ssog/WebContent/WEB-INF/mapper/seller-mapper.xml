@@ -32,14 +32,33 @@
   	
   	<!-- 상품 관리  -->
   	<select id="pro_list" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select * from 
-		( select rownum as r, tmp.* from (select * from productTbl 
-		<if test="sort != '' and sort != null">
-			where sell_on=#{sort} 
+  		 select tmp5.* from(select tmp3.*,tmp4.name as origin_name from 
+  		 (select * from (select rownum as r,tmp.* from(select tmp1.*,tmp2.name as cate_name from 
+  		 (producttbl tmp1 left join SMALL_CATEGORY tmp2 on tmp1.cate=tmp2.S_CATE) where 
+  		 <if test="state != '' and state != null">
+				sell_on= #{state} and 
 		</if>
-		order by pro_date desc) tmp ) tmp2 
-		where tmp2.r between #{start} and #{end} and seller_id=#{id}
+  		 seller_id=#{id} order by pro_date desc)  tmp) 
+  		  order by r asc)tmp3 left join origintbl tmp4 on tmp3.origin=tmp4.num)tmp5 
+  		  where r between  #{start} and #{end}
 	</select>
+	
+	<select id="countAll" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		select count(*) from(select tmp3.*,tmp4.name as origin_name from 
+  		 (select * from (select rownum as r,tmp.* from(select tmp1.*,tmp2.name from 
+  		 (producttbl tmp1 left join SMALL_CATEGORY tmp2 on tmp1.cate=tmp2.S_CATE) where 
+  		 <if test="state != '' and state != null">
+				sell_on= #{state} and 
+		 </if>
+  		  seller_id=#{id} order by pro_date desc)  tmp) 
+  		  order by r asc)tmp3 left join origintbl tmp4 on tmp3.origin=tmp4.num)tmp5 
+	</select>
+  	
+  	
+  	
+  	
+  	
+  	
   	
   	<select id="review" parameterType="java.util.HashMap" resultType="java.util.HashMap">
   		select * from review where seller_id=#{id}

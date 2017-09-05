@@ -38,19 +38,19 @@ public class SellerProductDao {
 		}
 	}
 	
-	/*//글이 총 몇개인지
-		public int totalList(Map map){
-			SqlSession session = factory.openSession();
-			try{
-				int r = session.selectOne("opendata.countAll", map);
-				//System.out.println("countAll: " + r);
-				return r;
-			} catch(Exception e){
-				e.printStackTrace();
-				session.rollback();
-				return 0;
-			} finally{
-				session.close();
-			}
-		}*/
+	//글이 총 몇개인지
+	public Integer totalList(Map map){
+		SqlSession session = factory.openSession();
+		try{
+			int r = session.selectOne("seller.countAll", map);
+			//System.out.println("countAll: " + r);
+			return r;
+		} catch(Exception e){
+			e.printStackTrace();
+			session.rollback();
+			return 0;
+		} finally{
+			session.close();
+		}
+	}
 }
