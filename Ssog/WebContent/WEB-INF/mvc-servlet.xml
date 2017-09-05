@@ -32,6 +32,7 @@
 			<array>
 				<value>/WEB-INF/tiles/mainTiles-config.xml</value>
 				<value>/WEB-INF/tiles/adminTiles-config.xml</value>
+				<value>/WEB-INF/tiles/sellerTiles-config.xml</value>
 			</array>
 		</property>
 	</bean>
@@ -61,7 +62,8 @@
 				<value>/WEB-INF/mapper/product_mapper.xml</value>
 				<value>/WEB-INF/mapper/admin-mapper.xml</value>
 				<value>/WEB-INF/mapper/myinfo-mapper.xml</value>
-				<value>/WEB-INF/mapper/cccenter-mapper.xml</value> 
+				<value>/WEB-INF/mapper/cccenter-mapper.xml</value>
+				<value>/WEB-INF/mapper/seller-mapper.xml</value>  
 			</list>
 		</property>
 	</bean>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- 판매자 탭 -->
+	<definition name="t_el_seller" extends="t_base">
+		<put-attribute name="title" value="/WEB-INF/view/seller/title.jsp" />
+		<put-attribute name="nav" value="/WEB-INF/view/seller/nav.jsp" />
+		<put-attribute name="section">
+			<definition template="/WEB-INF/view/seller/template.jsp">
+				<put-attribute name="section" expression="/WEB-INF/view/${section}.jsp" />
+			</definition>
+		</put-attribute>
+	</definition>
+</tiles-definitions>

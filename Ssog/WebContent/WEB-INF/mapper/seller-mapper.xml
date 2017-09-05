@@ -2,7 +2,6 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
  <mapper namespace="seller">
  	<!-- 기본정보 관리 -->
  	<insert id="join" parameterType="java.util.HashMap">
@@ -23,14 +22,45 @@
   		delete from seller_member where id=#{id}
   	</delete>
   	<update id="edit_info" parameterType="java.util.HashMap">
-  		update seller_member set pass=#{pass}, name=#{name}, phone=#{phone}, brand=#{brand}, account=#{account}
+  		update seller_member set name=#{name}, phone=#{phone}, brand=#{brand}, account=#{account}
   		where id=#{id}
+  	</update>
+  	<update id="edit_pass" parameterType="java.util.HashMap">
+  		update seller_member set pass=#{pass} where id=#{id}
   	</update>
   	
   	
   	<!-- 상품 관리  -->
-  	<select id="list">
-  		select * from productTbl 
-  		where id=#{id}
+  	<select id="pro_list" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+  		 select tmp5.* from(select tmp3.*,tmp4.name as origin_name from 
+  		 (select * from (select rownum as r,tmp.* from(select tmp1.*,tmp2.name as cate_name from 
+  		 (producttbl tmp1 left join SMALL_CATEGORY tmp2 on tmp1.cate=tmp2.S_CATE) where 
+  		 <if test="state != '' and state != null">
+				sell_on= #{state} and 
+		</if>
+  		 seller_id=#{id} order by pro_date desc)  tmp) 
+  		  order by r asc)tmp3 left join origintbl tmp4 on tmp3.origin=tmp4.num)tmp5 
+  		  where r between  #{start} and #{end}
+	</select>
+	
+	<select id="countAll" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		select count(*) from(select tmp3.*,tmp4.name as origin_name from 
+  		 (select * from (select rownum as r,tmp.* from(select tmp1.*,tmp2.name from 
+  		 (producttbl tmp1 left join SMALL_CATEGORY tmp2 on tmp1.cate=tmp2.S_CATE) where 
+  		 <if test="state != '' and state != null">
+				sell_on= #{state} and 
+		 </if>
+  		  seller_id=#{id} order by pro_date desc)  tmp) 
+  		  order by r asc)tmp3 left join origintbl tmp4 on tmp3.origin=tmp4.num)tmp5 
+	</select>
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	<select id="review" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+  		select * from review where seller_id=#{id}
   	</select>
  </mapper>
