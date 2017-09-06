@@ -33,6 +33,7 @@
   	<!-- 상품 관리  -->
   	<!-- column명을 대입해야 할 때는 '$'를 쓴다. '$'가 '#'보다 우선순위가 더 먼저 -->
   	<select id="pro_list" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+<<<<<<< HEAD
   		select tmp5.* from(select tmp3.*,tmp4.name as origin_name from 
   		 (select * from (select rownum as r, tmp.* from(select tmp1.*, tmp2.name as cate_name from 
   		 (producttbl tmp1 left join SMALL_CATEGORY tmp2 on tmp1.cate=tmp2.S_CATE) where
@@ -62,7 +63,35 @@
   		  
   		  order by pro_date desc)  tmp) 
   		  order by r asc)tmp3 left join origintbl tmp4 on tmp3.origin=tmp4.num)tmp5 
+=======
+  		 select tmp5.* from(select tmp3.*,tmp4.name as origin_name from 
+  		 (select * from (select rownum as r,tmp.* from(select tmp1.*,tmp2.name as cate_name from 
+  		 (producttbl tmp1 left join SMALL_CATEGORY tmp2 on tmp1.cate=tmp2.S_CATE) where 
+  		 <if test="state != '' and state != null">
+				sell_on= #{state} and 
+		</if>
+  		 seller_id=#{id} order by pro_date desc)  tmp) 
+  		  order by r asc)tmp3 left join origintbl tmp4 on tmp3.origin=tmp4.num)tmp5 
+  		  where r between  #{start} and #{end}
+>>>>>>> branch 'kimsu' of https://github.com/kimsu0503/work.git
 	</select>
+	
+	<select id="countAll" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		select count(*) from(select tmp3.*,tmp4.name as origin_name from 
+  		 (select * from (select rownum as r,tmp.* from(select tmp1.*,tmp2.name from 
+  		 (producttbl tmp1 left join SMALL_CATEGORY tmp2 on tmp1.cate=tmp2.S_CATE) where 
+  		 <if test="state != '' and state != null">
+				sell_on= #{state} and 
+		 </if>
+  		  seller_id=#{id} order by pro_date desc)  tmp) 
+  		  order by r asc)tmp3 left join origintbl tmp4 on tmp3.origin=tmp4.num)tmp5 
+	</select>
+  	
+  	
+  	
+  	
+  	
+  	
   	
   	<select id="review" parameterType="java.util.HashMap" resultType="java.util.HashMap">
   		select * from review where seller_id=#{id}

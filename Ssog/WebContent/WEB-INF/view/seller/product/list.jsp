@@ -73,6 +73,7 @@
 		
 	</ol>
 	
+	<form method="post">
 	
 	
 	<table class="border_none" width="90%">	
@@ -115,7 +116,7 @@
 		</th>
 	</tr>
 	</table>
-</div>
+</form>>
 
 
 <!-- 페이지 -->
@@ -164,4 +165,4 @@
 	</form>
 	
 </div>
-    
+    </div>

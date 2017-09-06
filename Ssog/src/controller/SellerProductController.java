@@ -32,7 +32,7 @@ public class SellerProductController {
 		String search_word = (String) map.get("search_word");
 		search_word = "%" + search_word + "%";
 		map.put("search_word", search_word);
-		
+		System.out.println(id);
 /*		String search_type = (String) map.get("search_type");
 		switch(search_type) {
 		case "상품번호":
@@ -60,6 +60,13 @@ public class SellerProductController {
 		mav.addObject("page", rst);
 		return mav;
 	}
-	
-	
+	//상품 목록에서 검색
+	@RequestMapping("/list_search.j")
+	public ModelAndView search(@RequestParam Map map){
+		ModelAndView mav = new ModelAndView("t_el_seller");
+			mav.addObject("search_type", map.get("search_type"));
+			mav.addObject("search_word", map.get("search_word"));
+			mav.addObject("section", "seller/product/list"); 
+		return mav;
+	}
 }
