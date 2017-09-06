@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
 <style>
 	.border_none	{border-collapse:collapse;}
 	.border_none td {border-bottom:1px solid gray;}
@@ -20,39 +21,58 @@
 	.pagination > li{
 	    display: inline-block;
 	}
+	
+	/* 검색창 */
+	input[type=text] {
+	    width: 150px;
+	    box-sizing: border-box;
+	    font-size: 16px;
+	    padding: 5px 5px;
+	    -webkit-transition: width 0.4s ease-in-out;
+	    transition: width 0.4s ease-in-out;
+	}
+	
+	.search { 
+		vertical-align:bottom; 
+		height:26px; 
+		border:1px solid #ccc; 
+		border-radius: 3px;
+	}
+	
+	#search_form { margin-top:80px; }
 </style>
 
-<form method="post">
-	<div class="container">
-		<ol class="breadcrumb">
-			<c:choose>
-				<c:when test="${param.state eq null or param.state eq ''}">
-				    <li class="active"><b>전체</b></li>
-				</c:when>
-				<c:otherwise>
-					<li><a href="/seller/product/list.j">전체</a></li>
-				</c:otherwise>
-			</c:choose>
-			
-			<c:choose>
-				<c:when test="${param.state eq 1}">
-				    <li class="active"><b>판매중</b></li>
-				</c:when>
-				<c:otherwise>
-			 		<li><a href="/seller/product/list.j?state=1">판매중</a></li>
-				</c:otherwise>
-			</c:choose>
-			
-			<c:choose>
-				<c:when test="${param.state eq 0}">
-				    <li class="active"><b>판매완료</b></li>
-				</c:when>
-				<c:otherwise>
-					<li><a href="/seller/product/list.j?state=0">판매완료</a></li>
-				</c:otherwise>
-			</c:choose>
-		</ol>
-	</div>
+<div class="container">
+	<ol class="breadcrumb">
+		<c:choose>
+			<c:when test="${param.state eq null or param.state eq ''}">
+			    <li><b>전체</b></li>
+			</c:when>
+			<c:otherwise>
+				<li><a href="/seller/product/list.j">전체</a></li>
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when test="${!empty param.state and param.state eq 0}">
+			    <li><b>판매완료</b></li>
+			</c:when>
+			<c:otherwise>
+				<li><a href="/seller/product/list.j?state=0">판매완료</a></li>
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when test="${param.state eq 1}">
+			   <li><b>판매중</b></li>
+			</c:when>
+			<c:otherwise>
+		 		<li><a href="/seller/product/list.j?state=1">판매중</a></li>
+			</c:otherwise>
+		</c:choose>
+		
+	</ol>
+	
 	
 	
 	<table class="border_none" width="90%">	
@@ -78,12 +98,12 @@
 	<c:forEach var="i" items="${list}">
 		<tr align="center" class="small">
 			<td><a href="#?pro_num=${i.PRO_NUM}" id="pro_num">${i.PRO_NUM}</a></td>
-			<td>${i.CATE}</td>
+			<td>${i.CATE_NAME}</td>
 			<td><a href="#?pro_num=${i.PRO_NUM}">${i.PRO_NAME}</a></td>
 			<td><fmt:formatNumber value="${i.PRO_QTY}" type="number"/></td>
 			<td><fmt:formatNumber value="${i.PRICE}" type="number"/></td>
 			<td><fmt:formatDate value="${i.PRO_DATE}"  pattern="yyyy-MM-dd"/></td>
-			<td>${i.ORIGIN}</td>
+			<td>${i.ORIGIN_NAME}</td>
 			<td>${i.SELL_ON}</td>
 		</tr>		
 	</c:forEach>
@@ -95,7 +115,7 @@
 		</th>
 	</tr>
 	</table>
-</form>
+</div>
 
 
 <!-- 페이지 -->
@@ -125,17 +145,23 @@
 			<li><a href="/seller/product/list.j?p=${page.endPageNo+1}&state=${param.state}&search_type=${param.search_type}&search_word=${param.search_word}">&raquo;</a></li>
 		</c:if>
 	</ul>
-</div>
+
 
 
 
 	<!-- 검색창. form에 action 경로에는 실제 주소만 됨. 파라미터 추가 설정하고 싶을 땐 hidden 속성을 이용 -->
-	<form action="/seller/product/list_search.j">
-		검색 <select name="search_type">
-			<c:forTokens items="상품번호,상품명,카테고리,일자별,원산지,판매상태" delims="," var="opt">
-				<option value="${opt}" ${opt eq param.search_type? 'selected' : ''}>${opt}</option>
+	<form action="/seller/product/list.j" id="search_form">
+	<input type="hidden" value="${param.state}" name="state">
+		<select name="search_type" class="search">
+			<c:forTokens items="pro_name,cate,pro_date,origin,sell_on,pro_num" delims="," var="opt">
+				<option value="${opt}" ${opt eq param.search_type? 'selected' : ''}><custom:search message="${opt}"/></option>
 			</c:forTokens>
 		</select>
-		<input type="text" name="search_word" value="${param.search_word}">
+		<input type="text" name="search_word" value="${param.search_word}" class="search">
+		 <button type="submit" class="btn btn-default btn-sm search">
+          <span class="glyphicon glyphicon-search"></span> Search 
+        </button>
 	</form>
+	
+</div>
     

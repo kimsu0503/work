@@ -29,19 +29,29 @@ public class SellerProductController {
 		ModelAndView mav = new ModelAndView("t_el_seller");
 		String id = (String)session.getAttribute("seller_id");
 		map.put("id", id);
-		System.out.println(id);
+		String search_word = (String) map.get("search_word");
+		search_word = "%" + search_word + "%";
+		map.put("search_word", search_word);
+		
+/*		String search_type = (String) map.get("search_type");
+		switch(search_type) {
+		case "상품번호":
+			break;
+		case "상품명":
+			카테고리,일자별,원산지,판매상태
+		}
+*/		
 		
 		int total = sdao.totalList(map);
 		page.setDefaultSetting(2, 4); //줄 개수, 페이지 개수
 		page.setNumberOfRecords(total);
 		Map op = page.calcBetween(p);
-		System.out.println(p + "/" + total);
 		Map rst = page.calcPaging(p, total); //현재페이지, 총개수
 			map.put("start", op.get("start"));
 			map.put("end", op.get("end"));
-		System.out.println("op:" + op);
-		System.out.println("rst:" + rst);
-		System.out.println("map:" + map);
+//		System.out.println("op:" + op);
+//		System.out.println("rst:" + rst);
+//		System.out.println("map:" + map);
 		
 		List list = sdao.productList(map);
 		mav.addObject("section", "seller/product/list");
@@ -51,13 +61,5 @@ public class SellerProductController {
 		return mav;
 	}
 	
-	//상품 목록에서 검색
-	@RequestMapping("/search.j")
-	public ModelAndView search(@RequestParam Map map){
-		ModelAndView mav = new ModelAndView("t_el_seller");
-			mav.addObject("search_type", map.get("search_type"));
-			mav.addObject("search_word", map.get("search_word"));
-			mav.addObject("section", "seller/product/list"); 
-		return mav;
-	}
+	
 }
