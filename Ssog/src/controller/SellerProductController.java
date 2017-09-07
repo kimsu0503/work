@@ -56,7 +56,7 @@ public class SellerProductController {
 		return mav;
 	}
 	
-	@RequestMapping("/cateAjax.j")
+	/*@RequestMapping("/cateAjax.j")
 	@ResponseBody
 	public Map cateajax(@RequestParam Map map) {
 		Map m = new HashMap<>();
@@ -72,5 +72,5 @@ public class SellerProductController {
 		}
 		Map map = new HashMap();
 		return m;
-	}
+	}*/
 }
