@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import model.SellerProductDao;
@@ -29,18 +31,9 @@ public class SellerProductController {
 		ModelAndView mav = new ModelAndView("t_el_seller");
 		String id = (String)session.getAttribute("seller_id");
 		map.put("id", id);
-		String search_word = (String) map.get("search_word");
-		search_word = "%" + search_word + "%";
+		String search_word2 = (String) map.get("search_word");
+		String search_word = "%" + search_word2 + "%";
 		map.put("search_word", search_word);
-		System.out.println(id);
-/*		String search_type = (String) map.get("search_type");
-		switch(search_type) {
-		case "상품번호":
-			break;
-		case "상품명":
-			카테고리,일자별,원산지,판매상태
-		}
-*/		
 		
 		int total = sdao.totalList(map);
 		page.setDefaultSetting(2, 4); //줄 개수, 페이지 개수
@@ -58,15 +51,26 @@ public class SellerProductController {
 		mav.addObject("list", list);
 		mav.addObject("p", p);
 		mav.addObject("page", rst);
+		mav.addObject("total", total);
+		mav.addObject("search_word", search_word2);
 		return mav;
 	}
-	//상품 목록에서 검색
-	@RequestMapping("/list_search.j")
-	public ModelAndView search(@RequestParam Map map){
-		ModelAndView mav = new ModelAndView("t_el_seller");
-			mav.addObject("search_type", map.get("search_type"));
-			mav.addObject("search_word", map.get("search_word"));
-			mav.addObject("section", "seller/product/list"); 
-		return mav;
+	
+	@RequestMapping("/cateAjax.j")
+	@ResponseBody
+	public Map cateajax(@RequestParam Map map) {
+		Map m = new HashMap<>();
+		boolean flag = true;
+		switch(){
+			case "id": 
+				flag = (mdao.info(value)==null)? true : false;
+				break;
+				
+			case "email":
+				flag = (mdao.findId(value)==null)? true : false;
+				break;
+		}
+		Map map = new HashMap();
+		return m;
 	}
 }

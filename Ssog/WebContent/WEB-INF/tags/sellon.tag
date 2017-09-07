@@ -3,12 +3,12 @@
 <%
 	String str="";
 	switch(message){
-		case "pro_name":
-			str = "상품명";
-			break;
-		case "pro_num":
-			str="상품번호";
-			break;
+	case "1":
+		str="판매중";
+		break;
+	case "0":
+		str="판매완료";
+		break;
 	}
 %>
 <%=str%>
