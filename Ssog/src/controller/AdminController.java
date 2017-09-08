@@ -64,8 +64,14 @@ public class AdminController {
 	
 	@RequestMapping("/management.ja")
 	public String management(Map map){
-		map.put("section", "/section/main");
+		map.put("section", "/management/information/company");
 		return "ad_management";
+	}
+	
+	@RequestMapping("/member.ja")
+	public String member(Map map){
+		map.put("section", "/member_user/user_list");
+		return "ad_member";
 	}
 	
 }

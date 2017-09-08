@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin_member">
+	<select id="user_list" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from (select o.*, ROWNUM rnum from (select id, name, email, phone from USER_MEMBER
+		<if test="type != null and type != ''">
+			where ${type} like #{value}
+		</if>
+		order by joindate desc) o) r where r.rnum BETWEEN #{start} and #{end}
+	</select>
+	
+	<select id="user_list_count" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		select count(*) count from (select o.*, ROWNUM rnum from (select id, name, email, phone from USER_MEMBER
+		<if test="type != null and type != ''">
+			where ${type} like #{value}
+		</if>
+		order by joindate desc) o) r
+	</select>
+</mapper>

@@ -30,5 +30,16 @@
 			</definition>
 		</put-attribute>
 	</definition>
+	
+	<definition name="ad_member" extends="ad_main">
+		<put-attribute name="section">
+			<definition template="/WEB-INF/view/admin/main/template.jsp">
+				<put-attribute name="nav"
+					expression="/WEB-INF/view/admin/nav/nav_member.jsp" />
+				<put-attribute name="section"
+					expression="/WEB-INF/view/admin/member/${section}.jsp" />
+			</definition>
+		</put-attribute>
+	</definition>
 
 </tiles-definitions>
