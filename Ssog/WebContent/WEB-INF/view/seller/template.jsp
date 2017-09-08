@@ -43,6 +43,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2e3d44', end
 <div class="row">
 	<div class="col-md-2" style="width:13%;">
 		<ul class="nav nav-stacked">
+			<li><a href="/seller/main.j">홈</a>
 			<li><a class="active">기본정보 관리</a></li>
 			<li><a href="/seller/info.j">회원 정보</a></li>
 			<li><a href="/seller/info_edit.j">회원 정보 변경</a></li>

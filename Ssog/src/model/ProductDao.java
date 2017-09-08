@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,5 +77,18 @@ public class ProductDao {
 			session.close();
 		}		
 		return list;
+	}
+	
+	public Map pro_detail(String num){
+		Map map=new HashMap<>();
+		SqlSession session=factory.openSession();
+		try {
+			map=session.selectOne("productdetail", num);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}		
+		return map;
 	}
 }

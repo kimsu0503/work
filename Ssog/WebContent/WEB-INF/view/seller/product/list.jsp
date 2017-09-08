@@ -7,6 +7,7 @@
 	/* .border_none	{border-collapse:collapse;}
 	.border_none td {border-bottom:1px solid gray;}
 	.border_none th {text-align:left;} */
+	table 			{white-space:nowrap;}
 	.table  a		{color:black;}
 	
 	.small	 {font-size:14px;}
@@ -41,42 +42,15 @@
 	
 	#search_form { margin-top:80px;}
 	.cut {width:15px; overflow:hidden; white-space:nowrap; text-overflow:string;}
-	table {white-space:nowrap;}
+	
+	#tab_sellon li { list-style: none; float:left; margin:1px; display:inline-block;}
+	#tab_date a { color:gray; margin:1px; width:30%; }
 </style>
    
 
 
 <div class="container" >
-	<ol class="breadcrumb" style="width:30%;">
-		<c:choose>
-			<c:when test="${param.state eq null or param.state eq ''}">
-			    <li><b>전체</b></li>
-			</c:when>
-			<c:otherwise>
-				<li><a href="/seller/product/list.j">전체</a></li>
-			</c:otherwise>
-		</c:choose>
-		<c:choose>
-			<c:when test="${param.state eq 1}">
-			   <li><b>판매중</b></li>
-			</c:when>
-			<c:otherwise>
-		 		<li><a href="/seller/product/list.j?state=1">판매중</a></li>
-			</c:otherwise>
-		</c:choose>
-		<c:choose>
-			<c:when test="${!empty param.state and param.state eq 0}">
-			    <li><b>판매완료</b></li>
-			</c:when>
-			<c:otherwise>
-				<li><a href="/seller/product/list.j?state=0">판매완료</a></li>
-			</c:otherwise>
-		</c:choose>
-	</ol>
-	
-	
-	<div class="container" style="width:90%; text-align:left;">
-		<span id="sub" style="font-weight:bold; font-size:16px;">
+		<span style="font-weight:bold; font-size:18px;">
 			<c:choose>
 				<c:when test="${!empty param.search_word }">
 					"${search_word}"(으)로 검색한 <font color="#337AB7">${total}</font>건의 결과입니다.
@@ -91,9 +65,44 @@
 		</span>
 		
 		
+	
+	
+	<div class="container" style="width:90%; text-align:left;">
 		
-		▼최신순 &nbsp;&nbsp; ▼오래된순
-			
+		<ul id="tab_sellon" style="width:30%;">
+			<c:choose>
+				<c:when test="${param.state eq null or param.state eq ''}">
+				    <li><b>전체</b></li>
+				</c:when>
+				<c:otherwise>
+					<li><a href="/seller/product/list.j">전체</a></li>
+				</c:otherwise>
+			</c:choose>
+			<c:choose>
+				<c:when test="${param.state eq 1}">
+				   <li><b>판매중</b></li>
+				</c:when>
+				<c:otherwise>
+			 		<li><a href="/seller/product/list.j?state=1">판매중</a></li>
+				</c:otherwise>
+			</c:choose>
+			<c:choose>
+				<c:when test="${!empty param.state and param.state eq 0}">
+				    <li><b>판매완료</b></li>
+				</c:when>
+				<c:otherwise>
+					<li><a href="/seller/product/list.j?state=0">판매완료</a></li>
+				</c:otherwise>
+			</c:choose>
+		</ul>
+		
+		
+		<span id="tab_date">
+			<a href="#">▼최신순</a>
+			<a href="#">▼오래된순</a>
+		</span>
+		
+		
 			
 		<!-- 상품 목록 테이블 -->
 		<form method="post" name="table_form" style="width:90%; text-align:left;">
@@ -179,15 +188,15 @@
 		<!-- 검색창. form에 action 경로에는 실제 주소만 됨. 파라미터 추가 설정하고 싶을 땐 hidden 속성을 이용 -->
 		<form action="/seller/product/list.j" id="search_form">
 			<input type="hidden" value="${param.state}" name="state">
-			<table>
+			<table border="1">
 				<tr>
 					<td>
-						<select name="search_type" class="search" style="width:80px">
+						<select name="search_type" class="search" style="width:90px">
 							<c:forTokens items="pro_name,pro_num" delims="," var="opt">
 								<option value="${opt}" ${opt eq param.search_type? 'selected' : ''}><custom:search message="${opt}"/></option>
 							</c:forTokens>
 						</select>
-						<input type="text" name="search_word" value="${param.search_word}" class="search"><p>
+						<input type="text" name="search_word" value="${param.search_word}" class="search">
 					</td>
 					<td rowspan="2">
 						 <button type="submit" class="btn btn-default btn-sm search" style="width:50px; height:62px">
@@ -195,19 +204,19 @@
 				         </button>
 					</td>
 				</tr>
+				</tr>
 				<tr>
 					<td>
 						<!-- 카테고리 검색 -->
-						<select id="big_cate" class="search" style="width:80px">
+						<select id="big_cate" name="big_cate" class="search" style="width:90px">
 							<option disabled="disabled" selected>대분류</option>
 							<option value="cate">카테고리</option>
 						</select> 
-						<select id="small_cate" class="search" style="width:150px">
+						<select id="small_cate" name="small_cate" class="search" style="width:150px">
 							<option disabled='disabled' selected>중분류</option>
 							<option value="*">전체선택</option>
 						</select>
 					</td>
-				</tr>
 			</table>
 				
 				
@@ -241,11 +250,10 @@
 					"big_cate" : $("#big_cate").val(),
 			}
 		}).done(function(obj){ 
-			window.alert(obj.list);
-			
+			//window.alert(obj.list[i].S_CATE);
 			var setTag = "";
 			for(var i=0; i<obj.list.length; i++){
-				setTag += "<option value='" + obj.list[i].NAME  + "'>" + obj.list[i].NAME + "</option>";
+				setTag += "<option value=\"" + obj.list[i].S_CATE + "\">" + obj.list[i].NAME + "</option>";
 			}
 			$("#small_cate").append(setTag);
 		});

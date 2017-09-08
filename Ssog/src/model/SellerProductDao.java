@@ -22,7 +22,6 @@ public class SellerProductDao {
 		SqlSession session = factory.openSession();
 		try {
 			List<Map<String,Object>> list =  session.selectList("seller.pro_list", map);
-			
 			session.commit();
 			return list;
 		} catch(Exception e){

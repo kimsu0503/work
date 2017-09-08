@@ -6,25 +6,32 @@
 table, th, td {
 	font-size: 13px;
 }
+
 .btn-custom {
-  background-color: hsl(0, 0%, 16%) !important;
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5b5b5b", endColorstr="#282828");
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#5b5b5b), to(#282828));
-  background-image: -moz-linear-gradient(top, #5b5b5b, #282828);
-  background-image: -ms-linear-gradient(top, #5b5b5b, #282828);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5b5b5b), color-stop(100%, #282828));
-  background-image: -webkit-linear-gradient(top, #5b5b5b, #282828);
-  background-image: -o-linear-gradient(top, #5b5b5b, #282828);
-  background-image: linear-gradient(#5b5b5b, #282828);
-  border-color: #282828 #282828 hsl(0, 0%, 11%);
-  color: #fff !important;
-  border-radius: 0px;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
-  -webkit-font-smoothing: antialiased;
+	background-color: hsl(0, 0%, 16%) !important;
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5b5b5b",
+		endColorstr="#282828");
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#5b5b5b),
+		to(#282828));
+	background-image: -moz-linear-gradient(top, #5b5b5b, #282828);
+	background-image: -ms-linear-gradient(top, #5b5b5b, #282828);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5b5b5b),
+		color-stop(100%, #282828));
+	background-image: -webkit-linear-gradient(top, #5b5b5b, #282828);
+	background-image: -o-linear-gradient(top, #5b5b5b, #282828);
+	background-image: linear-gradient(#5b5b5b, #282828);
+	border-color: #282828 #282828 hsl(0, 0%, 11%);
+	color: #fff !important;
+	border-radius: 0px;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
+	-webkit-font-smoothing: antialiased;
 }
 </style>
 <div class="row" style="padding-top: 20px;">
+	<div style="padding-left: 15px; padding-bottom: 20px;">
+		<img src="/image/info이미지.jpg" alt="Fjords" width="99%;">
+	</div>
 	<div class="col-sm-6" style="height: 200px;">
 		<table class="table table-condensed">
 			<thead>
@@ -79,8 +86,11 @@ table, th, td {
 		<div style="padding-bottom: 10px;">
 			<h4 style="font-size: 17px; text-align: left;">
 				<span class="glyphicon glyphicon-info-sign"
-					style="padding-right: 10px;"></span><b style="padding-right: 10px; color: #595959;">최근
+					style="padding-right: 10px;"></span><b
+					style="padding-right: 10px; color: #404040; letter-spacing: -1px;">최근
 					주문현황</b><small style="font-size: 12px;">(최근 2개월 기준)</small>
+
+
 			</h4>
 		</div>
 		<div
@@ -90,12 +100,16 @@ table, th, td {
 
 	</div>
 	<div class="col-sm-12" style="height: 100px; padding-top: 30px;">
-		<div style=" padding-bottom: 10px;">
-		<h4 style="font-size: 17px; text-align: left;">
+		<div style="padding-bottom: 10px;">
+			<h4 style="font-size: 17px; text-align: left;">
 				<span class="glyphicon glyphicon-info-sign"
-					style="padding-right: 10px;"></span><b style="padding-right: 10px; color: #595959;">최근
-					주문내역</b><small style="font-size: 12px;">(최근 2개월 기준)</small>
-		<a href="/member/myinfo/orderlist.j"><button class="btn btn-custom" style="width: 120px;height: 22px; font-size: 12px; padding: 0px;">전체 주문내역 보기</button></a>
+					style="padding-right: 10px;"></span><b
+					style="padding-right: 10px; color: #404040; letter-spacing: -1px;">최근
+					주문내역</b><small style="font-size: 12px;">(최근 2개월 기준)</small> <a
+					href="/member/myinfo/orderlist.j"><button
+						class="btn btn-custom"
+						style="width: 120px; height: 22px; font-size: 12px; padding: 0px;">전체
+						주문내역 보기</button></a>
 			</h4>
 		</div>
 		<div class="table-responsive">

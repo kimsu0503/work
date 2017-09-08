@@ -38,7 +38,7 @@ public class MemberController {
 	// 임시컨트롤러
 	@RequestMapping("/cart/form.j")
 	public ModelAndView cart() {
-		ModelAndView mav = new ModelAndView("cart/form");
+		ModelAndView mav = new ModelAndView("tw_cart/form");
 		return mav;
 	}
 	//===================================================

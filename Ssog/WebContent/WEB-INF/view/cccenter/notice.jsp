@@ -37,8 +37,8 @@
 			<tbody>
 				<c:forEach var="obj" items="${nalist }">
 					<tr>
-						<td>${obj.NOTICE_NUM }</td>
-						<td>${obj.TITLE }</td>
+						<td>${obj.RNUM }</td>
+						<td><a href="/cccenter/notice_detail.j?num=${obj.RNUM }">${obj.TITLE }</a></td>
 						<td>${obj.NOTICE_DATE }</td>
 						<th></th>
 					</tr>

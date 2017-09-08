@@ -4,6 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="product">
  	<select id="pro_list" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+ 		select * from(
  		select tmp2.* from(select tmp.*,rownum as r from 
  		(select temp1.*,temp2.total_sell from  producttbl temp1 left join sell_qty temp2 on temp1.pro_num = temp2.pro_num
  		 <if test="category != null and category != '' ">
@@ -11,14 +12,30 @@
  		 </if>
  		 <if test="search != null and search !=''">
  		where pro_name like #{search}
- 		</if> 		
+ 		</if>
+ 		<if test="origin_group !=null">
+ 			<choose>
+ 			<when test="(category != null and category != '') or (search != null and search !='')">
+ 				and
+ 			</when>
+ 			<otherwise>
+ 				where 
+ 			</otherwise>
+ 			</choose>
+ 			<foreach collection="origin_group" item="arr" separator=" or " open="(" close=")">
+ 				temp1.origin = #{arr}
+ 			</foreach> 			
+ 		</if> 		 		
  		<choose>
  		 <when test="sort == 'price_d'">order by price desc</when>
  		 <when test="sort == 'price_a'">order by price asc</when>
  		 <when test="sort == 'bestseller'">order by total_sell desc</when>
  		  <otherwise> order by pro_date desc  </otherwise>
  		 </choose>
- 		 )tmp where sell_on=1)tmp2 where tmp2.r between #{start} and #{end} 		
+ 		 )tmp where sell_on=1
+ 		 and price between #{min} and #{max}
+ 		 )tmp2 where tmp2.r between #{start} and #{end})tmp100 
+ 		 left join origintbl on tmp100.origin=origintbl.NUM 		
  	</select> 
  	
  	<select id="list_count" parameterType="java.util.HashMap" resultType="java.lang.Integer">
@@ -28,7 +45,21 @@
  		 </if> 	
  		  <if test="search != null and search !=''">
  		where pro_name like #{search}
- 		</if>	 
+ 		</if>	
+ 		<if test="origin_group !=null">
+ 			<choose>
+ 			<when test="(category != null and category != '') or (search != null and search !='')">
+ 				and
+ 			</when>
+ 			<otherwise>
+ 				where 
+ 			</otherwise>
+ 			</choose>
+ 			<foreach collection="origin_group" item="arr" separator=" or " open="(" close=")">
+ 				origin = #{arr}
+ 			</foreach>
+ 			
+ 		</if> 	 
  		 )tmp where sell_on=1)tmp2 
  	</select>
  	
@@ -54,7 +85,11 @@
  		 )tmp)tmp2  
  	</select>
  	<select id="originlist" resultType="java.util.HashMap">
- 		select * from origintbl
+ 		select * from origintbl order by num asc
+ 	</select>
+ 	
+ 	<select id="productdetail" parameterType="java.lang.String" resultType="java.util.HashMap">
+ 		select * from (producttbl tmp1 left join origintbl tmp2 on tmp1.origin=tmp2.num) where pro_num=#{num}
  	</select>
  	
  	

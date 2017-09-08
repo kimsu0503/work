@@ -114,7 +114,7 @@ public class MyinfoController {
 		Map init = init(session);
 		List<Map> qlist = mdao.qnaAll((String) init.get("id"));
 		ModelAndView mav = new ModelAndView("t_el2");
-		paging.setDefaultSetting(10, 5);
+		paging.setDefaultSetting(2, 5);
 		paging.setNumberOfRecords(mdao.qna_cnt());
 		System.out.println(mdao.qna_cnt()); 
 		Map bt = paging.calcBetween(p);

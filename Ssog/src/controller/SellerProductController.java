@@ -47,6 +47,7 @@ public class SellerProductController {
 //		System.out.println("map:" + map);
 		
 		List list = sdao.productList(map);
+		System.out.println(map);
 		mav.addObject("section", "seller/product/list");
 		mav.addObject("list", list);
 		mav.addObject("p", p);
@@ -65,6 +66,7 @@ public class SellerProductController {
 			break;
 		case "cate" : 
 			List list = sdao.smallcateList();
+			System.out.println("list : "+list);
 			m.put("list", list);
 			break;
 		}

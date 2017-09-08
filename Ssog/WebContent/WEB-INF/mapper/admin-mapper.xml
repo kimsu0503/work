@@ -36,11 +36,83 @@
 	</select>
 	
 	<select id="getList_notice" resultType="java.util.HashMap">
-		select n.NOTICE_NUM, n.TITLE, n.NOTICE_DATE, n.TARGET, t.TARGET targets from notice n left join target t on n.TARGET = t.NUM
+		select n.NOTICE_NUM, n.TITLE, n.NOTICE_DATE, n.TARGET, t.TARGET targets from notice n left join target t on n.TARGET = t.NUM order by n.NOTICE_DATE desc
 	</select>
 	
 	<select id="getDetail_notice" parameterType="java.lang.Integer" resultType="java.util.HashMap">
 		select r.* from (select n.*, t.TARGET targets from notice n left join target t on n.TARGET = t.NUM) r where r.notice_num = #{num}
 	</select>
+	
+	<insert id="putImage_notice" parameterType="java.util.HashMap">
+		insert all
+		<foreach collection="list" item="item" separator=" ">
+			 into notice_img (num, img_uuid) values (notice_num_seq.currval, #{item.src})
+		</foreach>
+		select * from dual
+	</insert>
+	
+	<update id="updateNotice" parameterType="java.util.HashMap">
+		update NOTICE set title = #{title}, content = #{content}, notice_date = sysdate, target = #{target} where notice_num = ${num}
+	</update>
+	
+	<delete id="delNotice_img">
+		delete notice_img where NUM = #{num}
+	</delete>
+	
+	<update id="updateImage_notice" parameterType="java.util.HashMap">
+		insert all
+		<foreach collection="list" item="item" separator=" ">
+			 into notice_img (num, img_uuid) values (#{num}, #{item.src})
+		</foreach>
+		select * from dual
+	</update>
+	
+	<select id="getInfo_company" resultType="java.util.HashMap">
+		select * from INFO_COMPANY
+	</select>
+	
+	<update id="updateInfo_company" parameterType="java.util.HashMap">
+		update info_company set	name = #{name}, value = #{val} where num = ${num}
+	</update>
+	
+	<delete id="delInfo_company" parameterType="java.lang.String">
+		delete from info_company where name=#{name}
+	</delete>
+	
+	<insert id="plusInfo_company">
+		insert into info_company values(#{name}, null, info_company_seq.nextval)
+	</insert>
+	
+	<select id="getNum_info_company" resultType="java.lang.Integer">
+		select i.num from info_company i where i.name=#{name}
+	</select>
+	
+	<select id="getUUID_notice_img" resultType="java.lang.String">
+		select ni.IMG_UUID from notice_img ni
+	</select>
+	
+	<select id="getTerms" resultType="java.util.HashMap">
+		select num, title from terms
+	</select>
+	
+	<select id="getDetail_terms" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+		select * from terms where num = #{num}
+	</select>
+	
+	<update id="updateTerms" parameterType="java.util.HashMap">
+		update terms set title = #{title}, content = #{content} where num = ${num}
+	</update>
+	
+	<insert id="plusTerms" parameterType="java.util.HashMap">
+		insert into terms values (terms_seq.nextval, #{title}, #{content})
+	</insert>
+	
+	<delete id="delTerms" parameterType="java.lang.Integer">
+		delete terms where num = #{num}
+	</delete>
+	
+	<delete id="delNotice">
+		delete notice where notice_num = #{num}
+	</delete>
 	
 </mapper>

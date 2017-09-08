@@ -42,7 +42,10 @@
   		 seller_id=#{id} 
   		 <if test="search_type != '' and search_type != null and search_word !='' and search_word != null">
 	  		  and ${search_type} like #{search_word} 
-  		  </if>
+  		 </if>
+  		 <if test="big_cate != '' and big_cate != null and small_cate != '' and small_cate != null">
+	  		  and ${big_cate} = #{small_cate}
+  		 </if>
   		 order by pro_date desc)  tmp) 
   		  order by r asc)tmp3 left join origintbl tmp4 on tmp3.origin=tmp4.num)tmp5 
   		  where r between #{start} and #{end}
@@ -66,7 +69,7 @@
 	
   	
   	<select id="small_cate" resultType="java.util.HashMap">
-  		select name from small_category
+  		select * from small_category
   	</select>
   	
   	
