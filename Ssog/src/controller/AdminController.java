@@ -1,16 +1,27 @@
 package controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import model.AdminDao;
 
@@ -42,11 +53,11 @@ public class AdminController {
 	@RequestMapping({"/","/index.ja"})
 	public String main(Map map) {
 		// doc = daily order count
-		map.put("doc", ad.getCnt("getCnt_dailyOrder"));
-		map.put("dpc", ad.getCnt("getCnt_dailyPay"));
-		map.put("duc", ad.getCnt("getCnt_dailyUser"));
-		map.put("auc", ad.getCnt("getCnt_allUser"));
-		map.put("luc", ad.getCnt("getCnt_leaveUser"));
+		map.put("doc", ad.doc());
+		map.put("dpc", ad.dpc());
+		map.put("duc", ad.duc());
+		map.put("auc", ad.auc());
+		map.put("luc", ad.luc());
 		System.out.println("main 입장");
 		return "ad_main";
 	}
@@ -57,35 +68,4 @@ public class AdminController {
 		return "ad_management";
 	}
 	
-	@RequestMapping("/notice/notice_list.ja")
-	public String notice_list(Map map){
-		// List<Map> rst = ad.getValues("getValues_All", "notice");
-		List<Map> rst = ad.getValues("getList_notice");
-		map.put("list", rst);
-		map.put("section", "/notice/notice_list");
-		return "ad_management";
-	}
-	
-	@RequestMapping("/notice/notice_detail.ja")
-	public String notice_detail(@RequestParam(name="num") Integer num, Map map){
-		Map rst = ad.getValues("getDetail_notice", num);
-		map.put("list", rst);
-		map.put("section", "/notice/notice_detail");
-		return "ad_management";
-	}
-	
-	@RequestMapping("/notice/notice_write.ja")
-	public String notice_write(Map map){
-		List<Map> rst = ad.getValues("getValues_All", "target");
-		map.put("list", rst);
-		map.put("section", "/notice/notice_write");
-		return "ad_management";
-	}
-	
-	@RequestMapping("/notice/notice_writeExec.ja")
-	@ResponseBody
-	public boolean notice_writeExec(@RequestParam Map params){
-		boolean b = ad.putValues("put_notice", params);
-		return b;
-	}
 }

@@ -13,11 +13,61 @@
 	<select id="notice" resultType="java.util.HashMap">
 		SELECT nn.* from
 		(SELECT n.*,ROWNUM rnum from
-		(SELECT * FROM NOTICE) n)nn where nn.rnum  <![CDATA[<=]]>4
+		(SELECT * FROM NOTICE)
+		n)nn where nn.rnum  <![CDATA[<=]]>4
+	</select>
+	<select id="one_notice" parameterType="java.lang.String"
+		resultType="java.util.HashMap">
+		select bb.* from(select b.*, rownum rnum from (SELECT * FROM NOTICE where target='1')b
+		order
+		by rnum desc)bb where bb.rnum=#{num}
 	</select>
 	<select id="noticeAll" resultType="java.util.HashMap">
-		SELECT nn.* from
-		(SELECT n.*,ROWNUM rnum from
-		(SELECT * FROM NOTICE) n)nn where nn.rnum
+		select b.*, rownum rnum from (SELECT * FROM NOTICE where target='1')b
+		order
+		by rnum desc
+		<!--
+		 select bb.* from(select b.*, rownum rnum from (SELECT * FROM NOTICE 
+			where target='1')b order by rnum desc)bb where bb.rnum between #{start} and #{end} 
+		-->
+	</select>
+	<select id="faq_sort_count" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+		select count(*) from(select f.*, c.category from
+		(SELECT * FROM FAQ)f
+		left join counsel_category c
+		on f.cate = c.num) r
+		<choose>
+			<when test="sort != '' and sort != null">
+				where cate=#{sort}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	<select id="faq_sort_page" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+		select b.* from (select r.*,ROWNUM rnum from(select
+		f.*, c.category
+		from
+		(SELECT * FROM FAQ)f
+		left join counsel_category c
+		on f.cate = c.num)
+		r
+		<if test="sort != '' and sort != null">
+			where cate=#{sort}
+		</if>
+		<if test="search != null and search != '' ">
+			where QUESTION like #{search} or answer like #{search}
+		</if>
+		)b where b.rnum between #{start} and #{end}
+	</select>
+	<select id="faq_search" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+		select * from faq
+		<if test="search != null and search ! =''">
+			where QUESTION like #{search} or answer like #{search}
+		</if>
+		order by NUM asc
 	</select>
 </mapper>

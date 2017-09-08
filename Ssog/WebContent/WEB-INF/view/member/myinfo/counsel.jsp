@@ -31,8 +31,8 @@ table, th, td {
 			문의내역입니다.</small>
 	</h4>
 </div>
-<b style="font-size: 12px; padding-right: 360px;">고객님께서 신청한 문의 : <b 
-	style="color: #ff4d4d; font-size: 13px;">${clist.size() }</b>건&nbsp;&nbsp;/&nbsp;
+<b style="font-size: 12px; padding-right: 330px;">고객님께서 신청한 문의 : <b 
+	style="color: #ff4d4d; font-size: 13px;">${page.size() }</b>건&nbsp;&nbsp;/&nbsp;
 	답변완료 된 문의 : 0건
 </b>
 <a href="/member/myinfo/counsel_detail.j"><button class="btn btn-custom" style="width: 85px; height: 22px; font-size: 11px; padding: 0px;">1:1 문의 하기</button></a>
