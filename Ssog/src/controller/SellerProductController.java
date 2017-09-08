@@ -56,21 +56,19 @@ public class SellerProductController {
 		return mav;
 	}
 	
-	/*@RequestMapping("/cateAjax.j")
+	@RequestMapping("/cateAjax.j")
 	@ResponseBody
-	public Map cateajax(@RequestParam Map map) {
+	public Map cateajax(@RequestParam(name="big_cate") String big_cate) {
 		Map m = new HashMap<>();
-		boolean flag = true;
-		switch(){
-			case "id": 
-				flag = (mdao.info(value)==null)? true : false;
-				break;
-				
-			case "email":
-				flag = (mdao.findId(value)==null)? true : false;
-				break;
+		switch(big_cate) {
+		case "*":
+			break;
+		case "cate" : 
+			List list = sdao.smallcateList();
+			m.put("list", list);
+			break;
 		}
-		Map map = new HashMap();
+		
 		return m;
-	}*/
+	}
 }

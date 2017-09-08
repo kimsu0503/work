@@ -49,4 +49,20 @@ public class SellerProductDao {
 		}
 	}
 	
+	//중분류 카테고리
+	public List<Map<String,Object>> smallcateList(){
+		SqlSession session = factory.openSession();
+		try {
+			List<Map<String,Object>> list =  session.selectList("small_cate");
+			session.commit();
+			return list;
+		} catch(Exception e){
+			e.printStackTrace();
+			session.rollback();
+			return null;
+		} finally{
+			session.close();
+		}
+	}
+	
 }

@@ -65,7 +65,14 @@
 	</select>
 	
   	
+  	<select id="small_cate" resultType="java.util.HashMap">
+  		select name from small_category
+  	</select>
   	
+  	
+  	
+  	
+  	<!-- 리뷰 -->
   	<select id="review" parameterType="java.util.HashMap" resultType="java.util.HashMap">
   		select * from review where seller_id=#{id}
   	</select>

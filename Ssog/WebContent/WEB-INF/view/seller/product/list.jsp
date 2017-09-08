@@ -39,7 +39,7 @@
 		border-radius: 3px;
 	}
 	
-	#search_form { margin-top:80px; }
+	#search_form { margin-top:80px;}
 	.cut {width:15px; overflow:hidden; white-space:nowrap; text-overflow:string;}
 	table {white-space:nowrap;}
 </style>
@@ -90,23 +90,9 @@
 			</c:choose>
 		</span>
 		
-		<!-- 대분류, 중분류 검색 -->
-		<form action="/seller/product/list.j">
-		<input type="hidden" value="${param.state}" name="state">
-			검색필터
-				<select id="big_cate" onchange="changeFunc();">
-					<option disabled="disabled" selected>대분류</option>
-					<option value="*" >전체선택</option>
-					<option value="cate">카테고리</option>
-					<option value="pro_date">날짜별</option>
-				</select> 
-				<select id="small_cate">
-					<option disabled="disabled" selected>중분류</option>
-					<option value="*">전체선택</option>
-					<option value="#">...</option>
-				</select>
-		</form>
 		
+		
+		▼최신순 &nbsp;&nbsp; ▼오래된순
 			
 			
 		<!-- 상품 목록 테이블 -->
@@ -138,7 +124,7 @@
 						<td><a href="#?pro_num=${i.PRO_NUM}" id="pro_num">${i.PRO_NUM}</a></td>
 						<td><span class="cut">[${i.CATE_NAME}]</span></td>
 						<td><a href="#?pro_num=${i.PRO_NUM}">${i.PRO_NAME}</a></td>
-						<td><fmt:formatNumber value="${i.PRO_QTY}" type="number"/>개</td>
+						<td><fmt:formatNumber value="${i.PRO_QTY}" type="number"/>kg</td>
 						<td><fmt:formatNumber value="${i.PRICE}" type="number"/>원</td>
 						<td><fmt:formatDate value="${i.PRO_DATE}"  pattern="yyyy-MM-dd"/></td>
 						<td>${i.ORIGIN_NAME}</td>
@@ -183,19 +169,51 @@
 			</c:if>
 		</ul>
 
-
+		
+		<!-- 대분류, 중분류 검색 -->
+		<form action="/seller/product/list.j">
+		<input type="hidden" value="${param.state}" name="state">
+			
+		</form>
+		
 		<!-- 검색창. form에 action 경로에는 실제 주소만 됨. 파라미터 추가 설정하고 싶을 땐 hidden 속성을 이용 -->
 		<form action="/seller/product/list.j" id="search_form">
-		<input type="hidden" value="${param.state}" name="state">
-			<select name="search_type" class="search">
-				<c:forTokens items="pro_name,pro_num" delims="," var="opt">
-					<option value="${opt}" ${opt eq param.search_type? 'selected' : ''}><custom:search message="${opt}"/></option>
-				</c:forTokens>
-			</select>
-			<input type="text" name="search_word" value="${param.search_word}" class="search">
-			 <button type="submit" class="btn btn-default btn-sm search">
-	          <span class="glyphicon glyphicon-search"></span> Search 
-	        </button>
+			<input type="hidden" value="${param.state}" name="state">
+			<table>
+				<tr>
+					<td>
+						<select name="search_type" class="search" style="width:80px">
+							<c:forTokens items="pro_name,pro_num" delims="," var="opt">
+								<option value="${opt}" ${opt eq param.search_type? 'selected' : ''}><custom:search message="${opt}"/></option>
+							</c:forTokens>
+						</select>
+						<input type="text" name="search_word" value="${param.search_word}" class="search"><p>
+					</td>
+					<td rowspan="2">
+						 <button type="submit" class="btn btn-default btn-sm search" style="width:50px; height:62px">
+						 	Search<br><span class="glyphicon glyphicon-search"></span>
+				         </button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<!-- 카테고리 검색 -->
+						<select id="big_cate" class="search" style="width:80px">
+							<option disabled="disabled" selected>대분류</option>
+							<option value="cate">카테고리</option>
+						</select> 
+						<select id="small_cate" class="search" style="width:150px">
+							<option disabled='disabled' selected>중분류</option>
+							<option value="*">전체선택</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+				
+				
+				
+			
+			
 		</form>
 	</div>
 	
@@ -214,22 +232,23 @@
 	    }
 	}
  	
- 	/* //select
-	function changeFunc() {
-	    var big_cate = document.getElementById("big_cate");
-	    var selectedValue = big_cate.options[big_cate.selectedIndex].value;
-	    window.alert(selectedValue);
-	   } */
-
- 	
-	$("#big_cate").change(function(){
+ 	//대분류
+	$("#big_cate").change("click",function(){
 		$.ajax({
-			url : "/cateAjax.j",
+			url : "/seller/product/cateAjax.j",
 			method: "get",
 			data : { 
-					"big_cate" : $("#big_cate").val(), 
-		}).done(function(rst){ //이게 responseText
-			window.alert(rst);
+					"big_cate" : $("#big_cate").val(),
+			}
+		}).done(function(obj){ 
+			window.alert(obj.list);
+			
+			var setTag = "";
+			for(var i=0; i<obj.list.length; i++){
+				setTag += "<option value='" + obj.list[i].NAME  + "'>" + obj.list[i].NAME + "</option>";
+			}
+			$("#small_cate").append(setTag);
 		});
 	});
+	
 </script>
