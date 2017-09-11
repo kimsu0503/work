@@ -14,6 +14,12 @@
 			<td colspan="2" bgcolor="gray"><font color="white" size="4"><b>비밀번호를 입력해주세요.</font></td>
 		</tr>
 		<tr>
+			<td width="150px" bgcolor="lightgray">이전 비밀번호</td> 
+			<td width="350px">
+				<input type="password" name="pre_pass" id="pre_pass" width="50%" required><p id="prepass_chk"></p>
+			</td>
+		</tr>
+		<tr>
 			<td width="150px" bgcolor="lightgray">새 비밀번호</td> 
 			<td width="350px">
 				<input type="password" name="pass" id="pass" width="50%" required>
@@ -32,15 +38,50 @@
   </div>
   
   <script>
-  	$("#pass2").keyup(function(){
-  		if($(this).val()>0){
-	  		if($("#pass").val() != $(this).val()){
-	  	  		$("#sbt").prop("disabled",true);
-	  			$("#pass_chk").html("비밀번호 불일치");
-	  		} else {
-	  			$("#sbt").prop("disabled",false);
+  	var check = $("#pass").keyup(function(){
+  		if($(this).val()>0 && $("#pass2").val()>0 ){
+	  		if($("#pass").val() == $("#pass2").val()){
 	  			$("#pass_chk").html("");
+	  		} else {
+	  			$("#pass_chk").html("비밀번호 불일치");
+	  			$("#sbt").prop("disabled",true);
 	  		} 
   		}
   	});
+  	
+  		
+  	var check2 = $("#pass2").keyup(function(){
+  		if($(this).val()>0 && $("#pass").val()>0 ){
+	  		if($("#pass").val() == $("#pass2").val()){
+	  			$("#pass_chk").html("");
+	  		} else {
+	  			$("#pass_chk").html("비밀번호 불일치");
+	  			$("#sbt").prop("disabled",true);
+	  		} 
+  		}
+  	});
+  	
+  	$("#pre_pass").keyup(function(){
+  		if($(this).val()>0){
+  			$.ajax({
+  				url : "/seller/passAjax.j",
+  				method: "get",
+  				data : { 
+  						"pre_pass" : $(this).val(), 
+  				}
+  			}).done(function(obj){ 
+  				if(obj.pre_check){
+  					$("#prepass_chk").html("");
+  					$("#sbt").prop("disabled",false);
+  					check;
+  					check2;
+  				} else {
+	  				$("#prepass_chk").html("비밀번호 불일치");
+	  				$("#sbt").prop("disabled",true);
+	  				check;
+	  				check2;
+  				}
+  			});
+  		}
+  	})
   </script>

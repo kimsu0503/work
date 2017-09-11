@@ -92,19 +92,19 @@ public class SellerInfoDao {
 	}
 	
 	//비밀번호 수정
-		public boolean editPass(Map map) {
-			System.out.println(map);
-			SqlSession session = factory.openSession();
-			try {
-				session.update("seller.edit_pass", map);
-				return true;
-			} catch (Exception e) {
-				e.printStackTrace();
-				return false;
-			}finally {
-				session.close();
-			}
+	public boolean editPass(Map map) {
+		System.out.println(map);
+		SqlSession session = factory.openSession();
+		try {
+			session.update("seller.edit_pass", map);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}finally {
+			session.close();
 		}
+	}
 	
 	//회원탈퇴
 	public boolean delete(String id) {
@@ -120,7 +120,4 @@ public class SellerInfoDao {
 			session.close();
 		}
 	}
-	
-	
-	
 }

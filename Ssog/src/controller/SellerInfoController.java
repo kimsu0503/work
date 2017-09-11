@@ -52,6 +52,24 @@ public class SellerInfoController {
 		return map;
 	}
 	
+	//비밀번호 변경 폼에서 이전 비번 가져오기
+	@RequestMapping("/passAjax.j")
+	@ResponseBody
+	public Map passajax(@RequestParam(name="pre_pass") String pre_pass, HttpSession session){
+		String id = (String)session.getAttribute("seller_id");
+		boolean flag = false;
+		Map m = sdao.overlapChk(id, "id");
+		String db_pass = (String) m.get("PASS");
+		if (pre_pass.equals(db_pass)) {
+			flag = true;
+		} else {
+			flag = false;
+		}
+		Map map = new HashMap<>();
+		map.put("pre_check", flag);
+		return map;
+	}
+	
 	@RequestMapping("/alert/join_rst.j")
 	public ModelAndView join_rst(@RequestParam Map param, HttpSession session) {
 		ModelAndView mav = new ModelAndView("t_el_seller");
