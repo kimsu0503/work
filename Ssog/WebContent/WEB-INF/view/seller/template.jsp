@@ -62,6 +62,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2e3d44', end
 			<li><a class="active">상담관리</a></li>
 			<li><a href="#">리뷰 보기</a></li>
 			<li><a href="#">Q&A</a></li>
+			<li><a href="#">관리자에게 문의</a></li>
 		</ul>
 	</div>
 	<div class="col-md-8" align="center">

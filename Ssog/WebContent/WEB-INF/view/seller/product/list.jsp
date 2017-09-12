@@ -45,6 +45,26 @@
 	
 	#tab_sellon li { list-style: none; float:left; margin:1px; display:inline-block;}
 	#tab_date a { color:gray; margin:1px; width:30%; }
+	.btn-custom {
+	background-color: hsl(0, 0%, 16%) !important;
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5b5b5b",
+		endColorstr="#282828");
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#5b5b5b),
+		to(#282828));
+	background-image: -moz-linear-gradient(top, #5b5b5b, #282828);
+	background-image: -ms-linear-gradient(top, #5b5b5b, #282828);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5b5b5b),
+		color-stop(100%, #282828));
+	background-image: -webkit-linear-gradient(top, #5b5b5b, #282828);
+	background-image: -o-linear-gradient(top, #5b5b5b, #282828);
+	background-image: linear-gradient(#5b5b5b, #282828);
+	border-color: #282828 #282828 hsl(0, 0%, 11%);
+	color: #fff !important;
+	border-radius: 0px;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
+	-webkit-font-smoothing: antialiased;
+}
 </style>
    
 
@@ -179,16 +199,11 @@
 		</ul>
 
 		
-		<!-- 대분류, 중분류 검색 -->
-		<form action="/seller/product/list.j">
-		<input type="hidden" value="${param.state}" name="state">
-			
-		</form>
 		
 		<!-- 검색창. form에 action 경로에는 실제 주소만 됨. 파라미터 추가 설정하고 싶을 땐 hidden 속성을 이용 -->
 		<form action="/seller/product/list.j" id="search_form">
 			<input type="hidden" value="${param.state}" name="state">
-			<table border="1">
+			<table>
 				<tr>
 					<td>
 						<select name="search_type" class="search" style="width:90px">
@@ -199,11 +214,10 @@
 						<input type="text" name="search_word" value="${param.search_word}" class="search">
 					</td>
 					<td rowspan="2">
-						 <button type="submit" class="btn btn-default btn-sm search" style="width:50px; height:62px">
+						 <button type="submit" class="btn btn-default btn-sm search btn-custom" style="width:50px; height:62px; padding:3px; margin:5px; border-radius: 3px;">
 						 	Search<br><span class="glyphicon glyphicon-search"></span>
 				         </button>
 					</td>
-				</tr>
 				</tr>
 				<tr>
 					<td>

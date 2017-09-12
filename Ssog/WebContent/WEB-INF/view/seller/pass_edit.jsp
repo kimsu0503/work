@@ -38,50 +38,67 @@
   </div>
   
   <script>
-  	var check = $("#pass").keyup(function(){
-  		if($(this).val()>0 && $("#pass2").val()>0 ){
+  	var check = function(){
+  		if($("#pass").val()>0 && $("#pass2").val()>0 ){
 	  		if($("#pass").val() == $("#pass2").val()){
 	  			$("#pass_chk").html("");
+	  			return true;
+	  			preChk;
 	  		} else {
 	  			$("#pass_chk").html("비밀번호 불일치");
 	  			$("#sbt").prop("disabled",true);
+	  			return false;
 	  		} 
   		}
-  	});
+  	};
+  	document.getElementById("pass").onkeyup = check;
+  	document.getElementById("pass2").onkeyup = check;
   	
-  		
-  	var check2 = $("#pass2").keyup(function(){
-  		if($(this).val()>0 && $("#pass").val()>0 ){
-	  		if($("#pass").val() == $("#pass2").val()){
-	  			$("#pass_chk").html("");
-	  		} else {
-	  			$("#pass_chk").html("비밀번호 불일치");
-	  			$("#sbt").prop("disabled",true);
-	  		} 
-  		}
-  	});
-  	
-  	$("#pre_pass").keyup(function(){
-  		if($(this).val()>0){
+  	/* var preChk = function(){
+		if(document.getElementById("pre_pass").value.trim().length>0){
+			var req = new XMLHttpRequest();
+			req.onreadystatechange = function() {
+				if (this.readyState == 4) {
+					var obj = JSON.parse(this.responseText);
+					if(obj.pre_check){
+						document.getElemenBytId("prepass_chk").innerHTML="";
+						if(check()){
+							document.getElementById("sbt").disabled=false;
+						}
+					} else {
+		  				$("#prepass_chk").html("비밀번호 불일치");
+		  				$("#sbt").prop("disabled",true);
+					}
+				}
+				req.open("get", "/seller/passAjax.j?pre_pass=" + $("#pre_pass").val());
+				req.send();
+			}
+		}
+	};
+	document.getElementById("pre_pass").onkeyup = preChk; 
+	
+	ㅅㅂ.......
+	*/
+  
+  	var preChk = $("#pre_pass").keyup(function(){
+  		if($("#pre_pass").val()>0){
   			$.ajax({
   				url : "/seller/passAjax.j",
   				method: "get",
   				data : { 
-  						"pre_pass" : $(this).val(), 
+  						"pre_pass" : $("#pre_pass").val(), 
   				}
   			}).done(function(obj){ 
   				if(obj.pre_check){
   					$("#prepass_chk").html("");
-  					$("#sbt").prop("disabled",false);
-  					check;
-  					check2;
+  					if(check()){
+  						$("#sbt").prop("disabled",false);
+  					}
   				} else {
 	  				$("#prepass_chk").html("비밀번호 불일치");
 	  				$("#sbt").prop("disabled",true);
-	  				check;
-	  				check2;
   				}
   			});
   		}
-  	})
+  	}); 
   </script>

@@ -18,7 +18,7 @@
 					id="name" required style="width: 90%;"/><br/>
 					<hr/>
 					<input class="form-control" type="text" placeholder="휴대폰번호(-제외)" name="phone"
-					id="phone" required style="width: 90%;"/><br/>
+					id="phone" required style="width: 90%;" onkeydown="onlyNumber(this)"/><br/>
 					<input class="form-control" type="text" placeholder="브랜드명" name="brand"
 					id="brand" required style="width: 90%;"/><br/>
 					
@@ -31,7 +31,7 @@
 							<option value="기업">기업</option>
 						</select>
 						<input class="form-control" type="text" placeholder="계좌번호(-제외)" name="account"
-						id="account" required style="width: 80%;"/>
+						id="account" required style="width: 80%;" onkeydown="onlyNumber(this)"/>
 						<p id="account_chk"></p>
 					</div>
 			</div>
@@ -86,4 +86,12 @@
 	
 	document.getElementById("id").onblur = joinChk;
 	document.getElementById("account").onblur = joinChk;
+	
+	//숫자만 입력 가능
+	function onlyNumber(obj) {
+	    $(obj).keyup(function(){
+	         $(this).val($(this).val().replace(/[^0-9]/g,""));
+	         window.alert("숫자만 입력 가능");
+	    }); 
+	}
 </script>
